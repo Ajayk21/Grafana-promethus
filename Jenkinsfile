@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage("Clear Workspace"){
         steps {
-          sh 'rm -rvf t*'
+          sh 'rm -rvf g*'
         }
     }
     stage("Checkout") {
@@ -13,39 +13,39 @@ pipeline {
     }
     stage('GCP Auth') {
         steps {
-         withCredentials([usernameColonPassword(credentialsId: 'GCP_PROJECT', variable: 'GCP_PROJECT'), file(credentialsId: 'GCP_CREDENTIALS', variable: 'GCP_CREDENTIALS')]) {
+         withCredentials([usernameColonPassword(credentialsId: '23de4526-31d8-4101-9e4c-2016ba714d4c', variable: 'GCP_PROJECTS'), file(credentialsId: 'ae64570f-7b1a-422a-be2a-f197a43e3822', variable: 'GCP_CREDENTIALS')]) {
          sh 'gcloud auth activate-service-account --key-file=$GCP_CREDENTIALS'
         }
       }
     }
     stage("Docker pull") {
       steps {
-        withCredentials([usernameColonPassword(credentialsId: 'cc4576a5-5d72-495e-aef7-74b11ce9e03e', variable: 'Docker_credentials')]) {
-        sh "docker login -u krishnavirat -p Krishna@2000"
-        sh 'docker pull krishnavirat/apachetomcat:tag2'
+        withCredentials([usernameColonPassword(credentialsId: '1e9f9321-360d-4161-b669-e41bac15a08a', variable: 'DOCKER_CREDENTIALS')])  {
+        sh "docker login -u ajaydocker21 -p @Ajay$IND21"
+        sh 'docker pull ajaydocker21/project3-grafana:tag1'
        }
      }
     }
     stage("Docker tag") {
       steps {     
-         sh 'docker tag krishnavirat/apachetomcat:tag2 gcr.io/model-argon-389809/tomcat:test1'
+         sh 'docker tag ajaydocker21/project3-grafana:tag1 gcr.io/ajay-409305/grafana:test1'
       }
     }
     stage("Docker push") { 
         steps {
              sh 'gcloud auth configure-docker'
-             sh 'docker push gcr.io/model-argon-389809/tomcat:test1'
+             sh 'docker push gcr.io/ajay-409305/grafana:test1'
            }
         }
      stage("cluster create") {
        steps {
-          sh 'gcloud container clusters create tomcat-cluster --num-nodes 3 --location=asia-south1-b'
+          sh 'gcloud container clusters create grafana-cluster --num-nodes 3 --location=asia-south1-b'
        }
      }
     stage("Create & expose deploy") {
        steps {
-         sh 'kubectl create deployment apachetomcat --image=gcr.io/model-argon-389809/tomcat:test1'
-         sh 'kubectl expose deployment apachetomcat --type=LoadBalancer --port 80 --target-port 8080'
+         sh 'kubectl create deployment grafana --image=gcr.io/ajay-409305/grafana:test1'
+         sh 'kubectl expose deployment grafana --type=LoadBalancer --port 80 --target-port 3000'
        }
     }
   }  
