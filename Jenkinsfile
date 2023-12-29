@@ -8,7 +8,7 @@ pipeline {
     }
     stage("Checkout") {
         steps {
-        sh 'https://github.com/Ajayk21/Grafana-promethus.git'
+        sh 'git clone https://github.com/Ajayk21/Grafana-promethus.git'
       }
     }
     stage('GCP Auth') {
