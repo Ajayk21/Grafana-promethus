@@ -13,7 +13,7 @@ pipeline {
     }
     stage('GCP Auth') {
         steps {
-         withCredentials([usernameColonPassword(credentialsId: '23de4526-31d8-4101-9e4c-2016ba714d4c', variable: 'GCP_PROJECTS'), file(credentialsId: 'ae64570f-7b1a-422a-be2a-f197a43e3822', variable: 'GCP_CREDENTIALS')]) {
+         withCredentials([usernameColonPassword(credentialsId: 'bee228a9-e7f6-406b-94c9-918d4bda41be', variable: 'GCP_PROJECTS'), file(credentialsId: 'ae64570f-7b1a-422a-be2a-f197a43e3822', variable: 'GCP_CREDENTIALS')])  {
          sh 'gcloud auth activate-service-account --key-file=$GCP_CREDENTIALS'
         }
       }
