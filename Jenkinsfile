@@ -13,14 +13,14 @@ pipeline {
     }
     stage('GCP Auth') {
         steps {
-         withCredentials([usernameColonPassword(credentialsId: 'c29c6656-7660-4108-a621-457c8b4548f2', variable: 'GCP_PROJECTS'), file(credentialsId: 'cdc4f58c-35e6-4888-9bf4-75d7ae8deeca', variable: 'gcp_json')]) {
+         withCredentials([usernameColonPassword(credentialsId: '60ea69b8-36eb-429e-a5a5-5c2913dc6606', variable: 'GCP_PROJECTS'), file(credentialsId: 'b52b4ada-3bc2-4e6b-903d-96dad1702d69', variable: 'gcp_json')]) {
          sh 'gcloud auth activate-service-account --key-file=$gcp_json'
         }
       }
     }
     stage("Docker pull") {
       steps {
-        withCredentials([usernameColonPassword(credentialsId: 'a1bc1715-8bf9-41c7-becf-3e2fe8e3ed67', variable: 'docker')]) {
+        withCredentials([usernameColonPassword(credentialsId: 'ad072211-f98a-405d-afae-f9614c01def6', variable: 'docker')]) {
         sh 'docker login -u ajaydocker21 -p @Ajay83449'
         sh 'docker pull ajaydocker21/project3-grafana:tag1'
        }
