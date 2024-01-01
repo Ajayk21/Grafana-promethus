@@ -13,7 +13,7 @@ pipeline {
     }
     stage('GCP Auth') {
         steps {
-         withCredentials([usernameColonPassword(credentialsId: 'bee228a9-e7f6-406b-94c9-918d4bda41be', variable: 'GCP_PROJECTS'), file(credentialsId: 'Json1', variable: 'gcp_json')]) {
+         withCredentials([usernameColonPassword(credentialsId: 'c29c6656-7660-4108-a621-457c8b4548f2', variable: 'GCP_PROJECTS'), file(credentialsId: 'cdc4f58c-35e6-4888-9bf4-75d7ae8deeca', variable: 'gcp_json')]) {
          sh 'gcloud auth activate-service-account --key-file=$gcp_json'
         }
       }
@@ -28,13 +28,13 @@ pipeline {
     }
     stage("Docker tag") {
       steps {     
-         sh 'docker tag ajaydocker21/project3-grafana:tag1 gcr.io/ajay-409305/grafana:test1'
+         sh 'docker tag ajaydocker21/project3-grafana:tag1 gcr.io/model-argon-389809/grafana:test1'
       }
     }
     stage("Docker push") { 
         steps {
              sh 'gcloud auth configure-docker'
-             sh 'docker push gcr.io/ajay-409305/grafana:test1'
+             sh 'docker push gcr.io/model-argon-389809/grafana:test1'
            }
         }
      stage("cluster create") {
@@ -44,7 +44,7 @@ pipeline {
      }
     stage("Create & expose deploy") {
        steps {
-         sh 'kubectl create deployment grafana --image=gcr.io/ajay-409305/grafana:test1'
+         sh 'kubectl create deployment grafana --image=gcr.io/model-argon-389809/grafana:test1'
          sh 'kubectl expose deployment grafana --type=LoadBalancer --port 80 --target-port 3000'
        }
     }
