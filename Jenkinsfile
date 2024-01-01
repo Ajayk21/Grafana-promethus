@@ -21,7 +21,7 @@ pipeline {
     stage("Docker pull") {
       steps {
         withCredentials([usernameColonPassword(credentialsId: 'b78eb4a2-ba3a-48c9-8986-ece9449c86a0', variable: 'DOCKER')]) {
-        sh "docker login -u ajaydocker21 -p @Ajay$IND21"
+        sh 'docker login -u ajaydocker21 -p @Ajay$IND21'
         sh 'docker pull ajaydocker21/project3-grafana:tag1'
        }
      }
