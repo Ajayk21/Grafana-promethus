@@ -39,7 +39,7 @@ pipeline {
         }
      stage("cluster create") {
        steps {
-          sh 'gcloud container clusters create grafana-cluster --num-nodes 3 --location=asia-south1-b'
+          sh 'gcloud container clusters create grafana-cluster --num-nodes 3 --location=europe-central1-c'
        }
      }
     stage("Create & expose deploy") {
